@@ -14,8 +14,7 @@ public class BackendApplication {
         String dbPassword = dotenv.get("DB_PASSWORD");
 
         if (dbUsername == null || dbPassword == null) {
-            System.err.println("Required environment variables DB_USERNAME or DB_PASSWORD are missing in .env file.");
-            System.exit(1); // Fail fast
+            throw new RuntimeException("Required environment variables DB_USERNAME or DB_PASSWORD are missing in .env file.");
         }
 
         System.setProperty("DB_USERNAME", dbUsername);

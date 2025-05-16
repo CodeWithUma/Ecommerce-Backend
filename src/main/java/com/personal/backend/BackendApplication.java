@@ -1,3 +1,12 @@
+/*
+File: BackendApplication.java
+
+Role: Entry point of the Spring Boot application.
+
+Annotations: @SpringBootApplication
+
+Importance: Boots the entire app using embedded Tomcat and starts auto-configuration.
+ */
 package com.personal.backend;
 
 import org.springframework.boot.SpringApplication;

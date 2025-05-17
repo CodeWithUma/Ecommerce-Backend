@@ -79,7 +79,8 @@ public class ImageService implements IImageService {
             image.setImage(new SerialBlob(file.getBytes()));
             imageRepository.save(image);
         } catch (IOException | SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException("Failed to update image with ID: " + imageId + 
+                    " and file name: " + file.getOriginalFilename(), e);
         }
 
     }

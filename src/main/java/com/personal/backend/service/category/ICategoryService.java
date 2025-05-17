@@ -32,24 +32,17 @@ Separate admin/customer logic - UserService interface → different implementati
 Microservices future-proofing - Allows smooth transition to external services
  */
 
-package com.personal.backend.service.product;
+package com.personal.backend.service.category;
 
-import com.personal.backend.model.Product;
-import com.personal.backend.request.AddProductRequest;
-import com.personal.backend.request.ProductUpdateRequest;
+import com.personal.backend.model.Category;
 
 import java.util.List;
 
-public interface IProductService {
-    Product addProduct(AddProductRequest product);
-    Product getProductById(Long id);
-    void deleteProductById(Long id);
-    Product updateProduct(ProductUpdateRequest product, Long productId);
-    List<Product> getAllProducts();
-    List<Product> getProductsByCategory(String category);
-    List<Product> getProductsByBrand(String brand);
-    List<Product> getProductsByCategoryAndBrand(String category, String brand);
-    List<Product> getProductsByName(String name);
-    List<Product> getProductsByBrandAndName(String category, String name);
-    Long countProductsByBrandAndName(String brand, String name);
+public interface ICategoryService {
+    Category getCategoryById(Long id);
+    Category getCategoryByName(String name);
+    List<Category> getAllCategories();
+    Category addCategory(Category category);
+    Category updateCategory(Category category, Long id);
+    void deleteCategoryById(Long id);
 }

@@ -63,7 +63,7 @@ public class ImageService implements IImageService {
                 savedImageDto.add(imageDto);
 
             }   catch(IOException | SQLException e){
-                throw new RuntimeException(e.getMessage());
+                throw new RuntimeException("Failed to process image file", e);
             }
         }
         return savedImageDto;

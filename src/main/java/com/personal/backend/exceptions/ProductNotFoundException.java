@@ -17,6 +17,7 @@ Flow: The flow of the exception/ folder in a Spring Boot app is all about how ex
         "Payment failed", or "Invalid credentials" need clear, consistent handling.
 
  */
+
 package com.personal.backend.exceptions;
 
 public class ProductNotFoundException extends RuntimeException {

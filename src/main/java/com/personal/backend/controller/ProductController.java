@@ -115,7 +115,7 @@ public class ProductController {
             }
             return  ResponseEntity.ok(new ApiResponse("success", products));
         } catch (Exception e) {
-            return ResponseEntity.ok(new ApiResponse(e.getMessage(), null));
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(), null));
         }
     }
 

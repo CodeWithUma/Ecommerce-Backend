@@ -38,7 +38,7 @@ public class ImageService implements IImageService {
     }
 
     @Override
-    public List<ImageDto> saveImages(List<MultipartFile> files, Long productId) {
+    public List<ImageDto> saveImages( Long productId,   List<MultipartFile> files) {
         Product product = productService.getProductById(productId);
 
         List<ImageDto> savedImageDto = new ArrayList<>();
@@ -51,19 +51,21 @@ public class ImageService implements IImageService {
                 image.setProduct(product);
 
                 String buildDownloadUrl = "/api/v1/images/image/download/";
-                imageRepository.save(image); // Save initially to generate the ID
-                String downloadUrl = buildDownloadUrl + image.getId();
+                String downloadUrl = buildDownloadUrl+image.getId();
                 image.setDownloadUrl(downloadUrl);
-                imageRepository.save(image); // Save again to persist the downloadUrl
+                Image savedImage = imageRepository.save(image);
+
+                savedImage.setDownloadUrl(buildDownloadUrl+savedImage.getId());
+                imageRepository.save(savedImage);
 
                 ImageDto imageDto = new ImageDto();
-                imageDto.setId(image.getId());
-                imageDto.setFileName(image.getFileName());
-                imageDto.setDownloadUrl(image.getDownloadUrl());
+                imageDto.setId(savedImage.getId());
+                imageDto.setFileName(savedImage.getFileName());
+                imageDto.setDownloadUrl(savedImage.getDownloadUrl());
                 savedImageDto.add(imageDto);
 
             }   catch(IOException | SQLException e){
-                throw new RuntimeException("Failed to process image file", e);
+                throw new RuntimeException("Failed to save image file", e);
             }
         }
         return savedImageDto;

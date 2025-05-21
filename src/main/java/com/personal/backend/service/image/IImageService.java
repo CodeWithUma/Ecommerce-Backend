@@ -29,7 +29,7 @@ public interface IImageService {
      * @param productId the unique identifier of the product to associate the images with
      * @return a list of ImageDto objects representing the saved images
      */
-    List<ImageDto> saveImages(List<MultipartFile> files, Long productId);
+    List<ImageDto> saveImages(Long productId, List<MultipartFile> files);
 
     /**
      * Updates an existing image with a new file.

@@ -34,6 +34,7 @@ Microservices future-proofing - Allows smooth transition to external services
 
 package com.personal.backend.service.product;
 
+import com.personal.backend.dto.ProductDto;
 import com.personal.backend.model.Product;
 import com.personal.backend.request.AddProductRequest;
 import com.personal.backend.request.ProductUpdateRequest;
@@ -52,4 +53,8 @@ public interface IProductService {
     List<Product> getProductsByName(String name);
     List<Product> getProductsByBrandAndName(String category, String name);
     Long countProductsByBrandAndName(String brand, String name);
+
+    List<ProductDto> getConvertedProducts(List<Product> products);
+
+    ProductDto convertToDto(Product product);
 }

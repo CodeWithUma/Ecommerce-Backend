@@ -30,6 +30,7 @@ public class Category {
     private Long id;
     private String name;
 
+    // To Break the Loop JsonIgnore is used
     @JsonIgnore
     @OneToMany(mappedBy = "category")
     private List<Product> products;

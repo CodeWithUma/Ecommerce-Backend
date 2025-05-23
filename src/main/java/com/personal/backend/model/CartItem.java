@@ -1,5 +1,6 @@
 package com.personal.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,11 +25,16 @@ public class CartItem {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
+    public static BigDecimal calculateTotalPrice(BigDecimal unitPrice, int quantity) {
+        return unitPrice.multiply(BigDecimal.valueOf(quantity));
+    }
+
     public void updateTotalPrice() {
-        this.totalPrice = this.unitPrice.multiply(BigDecimal.valueOf(quantity));
+        this.totalPrice = calculateTotalPrice(this.unitPrice, this.quantity);
     }
 }

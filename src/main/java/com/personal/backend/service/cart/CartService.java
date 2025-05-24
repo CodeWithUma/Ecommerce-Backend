@@ -17,24 +17,22 @@ public class CartService implements ICartService{
 
     @Override
     public Cart getCart(Long id) {
-        Cart cart = cartRepository.findById(id)
+        return cartRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
-        BigDecimal totalAmount = cart.getTotalAmount();
-        cart.setTotalAmount(totalAmount);
-        return cartRepository.save(cart);
     }
 
     @Override
     public void clearCart(Long id) {
         Cart cart = getCart(id);
-        cartItemRepository.deleteAllByCartId(id);
-        cart.getItems().clear();
-        cartRepository.deleteById(id);
+        cartItemRepository.deleteAllByCartId(id); // Clear items from DB
+        cart.getItems().clear(); // Clear local collection
+        cart.setTotalAmount(BigDecimal.ZERO); // Reset total
+        cartRepository.save(cart); // Save updated empty cart
     }
 
     @Override
     public BigDecimal getTotalPrice(Long id) {
         Cart cart = getCart(id);
-        return cart.getTotalAmount();
+        return cart.getTotalAmount(); // Assume totalAmount is updated elsewhere (e.g. on item add/remove)
     }
 }

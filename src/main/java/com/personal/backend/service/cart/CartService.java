@@ -4,6 +4,7 @@ import com.personal.backend.exceptions.ResourceNotFoundException;
 import com.personal.backend.model.Cart;
 import com.personal.backend.repository.CartItemRepository;
 import com.personal.backend.repository.CartRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class CartService implements ICartService{
     }
 
     @Override
+    @Transactional
     public void clearCart(Long id) {
         Cart cart = getCart(id);
         cartItemRepository.deleteAllByCartId(id); // Clear items from DB

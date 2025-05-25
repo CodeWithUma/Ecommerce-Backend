@@ -11,6 +11,7 @@ Importance: Defines the structure of your database and objects you work with.
 */
 package com.personal.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,6 +32,7 @@ public class Image {
     private String fileName;
     private String fileType;
 
+    @JsonIgnore
     @Lob
     private Blob image;
     private String downloadUrl;

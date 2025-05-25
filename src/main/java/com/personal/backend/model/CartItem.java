@@ -30,11 +30,7 @@ public class CartItem {
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
-    public static BigDecimal calculateTotalPrice(BigDecimal unitPrice, int quantity) {
-        return unitPrice.multiply(BigDecimal.valueOf(quantity));
-    }
-
-    public void updateTotalPrice() {
-        this.totalPrice = calculateTotalPrice(this.unitPrice, this.quantity);
+    public void setTotalPrice() {
+        this.totalPrice = this.unitPrice.multiply(BigDecimal.valueOf(quantity));
     }
 }

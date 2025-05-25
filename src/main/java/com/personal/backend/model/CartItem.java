@@ -20,7 +20,7 @@ public class CartItem {
     private int quantity;
     private BigDecimal unitPrice;
     private BigDecimal totalPrice;
-    
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
@@ -31,6 +31,6 @@ public class CartItem {
     private Cart cart;
 
     public void setTotalPrice() {
-        this.totalPrice = this.unitPrice.multiply(new BigDecimal(quantity));
+        this.totalPrice = this.unitPrice.multiply(BigDecimal.valueOf(quantity));
     }
 }

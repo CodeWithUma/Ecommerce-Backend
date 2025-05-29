@@ -21,7 +21,7 @@ public class Cart {
     private Long id;
 
     @Version
-    private Integer version = 0;
+    private Integer version;
 
     private BigDecimal totalAmount = BigDecimal.ZERO;
 

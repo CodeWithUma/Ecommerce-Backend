@@ -136,9 +136,7 @@ public class ProductService implements IProductService {
 
     @Override
     public List<ProductDto> getConvertedProducts(List<Product> products) {
-        return products.stream()
-                .map(this::convertToDto)
-                .toList();
+        return products.stream().map(this::convertToDto).toList();
     }
 
     @Override

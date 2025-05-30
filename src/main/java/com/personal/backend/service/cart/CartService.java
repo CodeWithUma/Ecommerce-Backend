@@ -47,7 +47,8 @@ public class CartService implements ICartService {
     @Override
     public Long initializeNewCart() {
         Cart newCart = new Cart();
-        newCart.setTotalAmount(BigDecimal.ZERO);
+        Long newCartId = cartIdGenerator.incrementAndGet();
+        newCart.setId(newCartId);
         return cartRepository.save(newCart).getId();
     }
 
@@ -61,7 +62,6 @@ public class CartService implements ICartService {
     public CartDto convertToDto(Cart cart) {
         CartDto cartDto = new CartDto();
         cartDto.setCartId(cart.getId());
-        cartDto.setVersion(cart.getVersion());
         cartDto.setTotalAmount(cart.getTotalAmount());
 
         if (cart.getItems() != null) {
@@ -69,7 +69,6 @@ public class CartService implements ICartService {
                     .map(this::convertCartItemToDto)
                     .collect(Collectors.toSet()));
         }
-
         return cartDto;
     }
 

@@ -37,6 +37,9 @@ public class OrderService implements IOrderService {
     private List<OrderItem> createOrderItems(Order order, Cart cart) {
         return cart.getItems().stream().map(cartItem -> {
             Product product = cartItem.getProduct();
+            if (product.getInventory() < cartItem.getQuantity()) {
+                throw new IllegalArgumentException("Insufficient inventory for product: " + product.getId());
+            }
             product.setInventory(product.getInventory() - cartItem.getQuantity());
             productRepository.save(product);
             return new OrderItem(

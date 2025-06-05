@@ -80,4 +80,9 @@ public class CartService implements ICartService {
                 .price(item.getTotalPrice())
                 .build();
     }
+
+    @Override
+    public Cart getCartByUserId(Long userId) {
+        return cartRepository.findByUserId(userId);
+    }
 }

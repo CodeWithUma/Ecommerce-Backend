@@ -22,6 +22,14 @@ public class OrderController {
         try {
             Order order = orderService.placeOrder(userId);
             return ResponseEntity.ok(new ApiResponse("Item Order Success!", order));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new ApiResponse("Invalid input provided!", e.getMessage()));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(new ApiResponse("Resource not found!", e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)

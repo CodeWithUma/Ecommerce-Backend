@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ApiResponse> createUser(@RequestBody CreateUserRequest request) {
+    public ResponseEntity<ApiResponse> createUser(@Valid @RequestBody CreateUserRequest request) {
         try {
             User user = userService.createUser(request);
             return ResponseEntity.ok(new ApiResponse("Create User Success!", user));

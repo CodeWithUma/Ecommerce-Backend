@@ -10,10 +10,10 @@ import com.personal.backend.model.Product;
 import com.personal.backend.repository.OrderRepository;
 import com.personal.backend.repository.ProductRepository;
 import com.personal.backend.service.cart.CartService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

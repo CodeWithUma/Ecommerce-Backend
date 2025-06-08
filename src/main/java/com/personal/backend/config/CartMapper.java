@@ -23,7 +23,6 @@ public class CartMapper {
                 .itemId(item.getProduct().getId())
                 .quantity(item.getQuantity())
                 .unitPrice(item.getUnitPrice())
-                .product(ProductMapper.toDto(item.getProduct()))
                 .build()).collect(Collectors.toSet());
     }
 }

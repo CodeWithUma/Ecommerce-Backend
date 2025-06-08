@@ -74,10 +74,9 @@ public class CartService implements ICartService {
 
     private CartItemDto convertCartItemToDto(CartItem item) {
         return CartItemDto.builder()
-                .productId(item.getProduct().getId())
-                .productName(item.getProduct().getName())
+                .itemId(item.getProduct().getId())
                 .quantity(item.getQuantity())
-                .price(item.getTotalPrice())
+                .unitPrice(item.getUnitPrice())
                 .build();
     }
 

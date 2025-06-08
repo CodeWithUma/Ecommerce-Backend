@@ -14,7 +14,6 @@ import java.util.Set;
 @AllArgsConstructor
 public class CartDto {
     private Long cartId;
-    private Integer version;
     private BigDecimal totalAmount;
     private Set<CartItemDto> items;
 }

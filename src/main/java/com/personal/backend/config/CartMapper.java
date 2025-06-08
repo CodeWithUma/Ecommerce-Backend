@@ -20,10 +20,10 @@ public class CartMapper {
 
     private static Set<CartItemDto> toItemDtoSet(Set<CartItem> items) {
         return items.stream().map(item -> CartItemDto.builder()
-                .productId(item.getProduct().getId())
-                .productName(item.getProduct().getName())
+                .itemId(item.getProduct().getId())
                 .quantity(item.getQuantity())
-                .price(item.getUnitPrice())
+                .unitPrice(item.getUnitPrice())
+                .product(ProductMapper.toDto(item.getProduct()))
                 .build()).collect(Collectors.toSet());
     }
 }

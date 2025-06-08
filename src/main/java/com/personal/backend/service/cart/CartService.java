@@ -76,7 +76,7 @@ public class CartService implements ICartService {
         return CartItemDto.builder()
                 .itemId(item.getProduct().getId())
                 .quantity(item.getQuantity())
-                .unitPrice(item.getTotalPrice())
+                .unitPrice(item.getUnitPrice())
                 .build();
     }
 

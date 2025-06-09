@@ -32,6 +32,9 @@ public class OrderService implements IOrderService {
     @Override
     public Order placeOrder(Long userId) {
         Cart cart = cartService.getCartByUserId(userId);
+        if (cart == null) {
+            throw new ResourceNotFoundException("Cart not found for user with ID " + userId);
+        }
         Order order = createOrder(cart);
         List<OrderItem> orderItemList = createOrderItems(order, cart);
         order.setOrderItems(new HashSet<>(orderItemList));
@@ -50,14 +53,11 @@ public class OrderService implements IOrderService {
     }
 
     private List<OrderItem> createOrderItems(Order order, Cart cart) {
-        return cart.getItems().stream().map(cartItem -> {
+        return  cart.getItems().stream().map(cartItem -> {
             Product product = cartItem.getProduct();
-            if (product.getInventory() < cartItem.getQuantity()) {
-                throw new IllegalArgumentException("Insufficient inventory for product: " + product.getId());
-            }
             product.setInventory(product.getInventory() - cartItem.getQuantity());
             productRepository.save(product);
-            return new OrderItem(
+            return  new OrderItem(
                     order,
                     product,
                     cartItem.getQuantity(),
@@ -86,7 +86,8 @@ public class OrderService implements IOrderService {
         return orders.stream().map(this :: convertToDto).toList();
     }
 
-    private OrderDto convertToDto(Order order) {
+    @Override
+    public OrderDto convertToDto(Order order) {
         return modelMapper.map(order, OrderDto.class);
     }
 }

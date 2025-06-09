@@ -1,26 +1,20 @@
 package com.personal.backend.service.cart;
 
-import com.personal.backend.dto.CartDto;
-import com.personal.backend.dto.CartItemDto;
 import com.personal.backend.exceptions.ResourceNotFoundException;
 import com.personal.backend.model.Cart;
-import com.personal.backend.model.CartItem;
-import com.personal.backend.repository.CartItemRepository;
+import com.personal.backend.model.User;
 import com.personal.backend.repository.CartRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CartService implements ICartService {
     private final CartRepository cartRepository;
-    private final CartItemRepository cartItemRepository;
-    private final AtomicLong cartIdGenerator = new AtomicLong(0);
 
     @Override
     public Cart getCart(Long id) {
@@ -32,8 +26,7 @@ public class CartService implements ICartService {
     @Override
     public void clearCart(Long id) {
         Cart cart = getCart(id);
-        cartItemRepository.deleteAllByCartId(id);
-        cart.getItems().clear();
+        cart.getItems().clear(); // Hibernate will handle orphan removal
         cart.setTotalAmount(BigDecimal.ZERO);
         cartRepository.save(cart); // Update the cleared cart instead of deleting it
     }
@@ -45,39 +38,13 @@ public class CartService implements ICartService {
     }
 
     @Override
-    public Long initializeNewCart() {
-        Cart newCart = new Cart();
-        Long newCartId = cartIdGenerator.incrementAndGet();
-        newCart.setId(newCartId);
-        return cartRepository.save(newCart).getId();
-    }
-
-    @Override
-    public CartDto getCartDto(Long id) {
-        Cart cart = getCart(id);
-        return convertToDto(cart);
-    }
-
-    @Override
-    public CartDto convertToDto(Cart cart) {
-        CartDto cartDto = new CartDto();
-        cartDto.setCartId(cart.getId());
-        cartDto.setTotalAmount(cart.getTotalAmount());
-
-        if (cart.getItems() != null) {
-            cartDto.setItems(cart.getItems().stream()
-                    .map(this::convertCartItemToDto)
-                    .collect(Collectors.toSet()));
-        }
-        return cartDto;
-    }
-
-    private CartItemDto convertCartItemToDto(CartItem item) {
-        return CartItemDto.builder()
-                .itemId(item.getProduct().getId())
-                .quantity(item.getQuantity())
-                .unitPrice(item.getUnitPrice())
-                .build();
+    public Cart initializeNewCart(User user) {
+        return Optional.ofNullable(getCartByUserId(user.getId()))
+                .orElseGet(() -> {
+                    Cart cart = new Cart();
+                    cart.setUser(user);
+                    return cartRepository.save(cart);
+                });
     }
 
     @Override

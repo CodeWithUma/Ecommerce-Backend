@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 public class OrderItemDto {
     private Long productId;
     private String productName;
+    private String productBrand; // Ensure this field is populated during mapping or conversion logic
     private int quantity;
     private BigDecimal price;
 }

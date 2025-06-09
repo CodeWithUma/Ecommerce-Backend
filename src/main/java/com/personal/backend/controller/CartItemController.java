@@ -1,10 +1,12 @@
 package com.personal.backend.controller;
 
-import com.personal.backend.dto.CartItemDto;
 import com.personal.backend.exceptions.ResourceNotFoundException;
+import com.personal.backend.model.Cart;
+import com.personal.backend.model.User;
 import com.personal.backend.response.ApiResponse;
 import com.personal.backend.service.cart.ICartItemService;
 import com.personal.backend.service.cart.ICartService;
+import com.personal.backend.service.user.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,15 +19,15 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class CartItemController {
     private final ICartItemService cartItemService;
     private final ICartService cartService;
+    private  final IUserService userService;
 
     @PostMapping("/item/add")
-    public ResponseEntity<ApiResponse> addItemToCart(@RequestParam(required = false) Long cartId,
-                                                     @RequestBody CartItemDto cartItemDto) {
+    public ResponseEntity<ApiResponse> addItemToCart(@RequestParam Long productId,
+                                                     @RequestParam Integer quantity) {
         try {
-            if (cartId == null) {
-                cartId = cartService.initializeNewCart();
-            }
-            cartItemService.addItemToCart(cartId, cartItemDto.getItemId(), cartItemDto.getQuantity());
+            User user = userService.getUserById(1L);
+            Cart cart = cartService.initializeNewCart(user);
+            cartItemService.addItemToCart(cart.getId(), productId, quantity);
             return ResponseEntity.ok(new ApiResponse("Add Item Success", null));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
@@ -43,11 +45,11 @@ public class CartItemController {
     }
 
     @PutMapping("/cart/{cartId}/item/{itemId}/update")
-    public ResponseEntity<ApiResponse> updateItemQuantity(@PathVariable Long cartId,
-                                                          @PathVariable Long itemId,
-                                                          @RequestBody CartItemDto cartItemDto) {
+    public  ResponseEntity<ApiResponse> updateItemQuantity(@PathVariable Long cartId,
+                                                           @PathVariable Long itemId,
+                                                           @RequestParam Integer quantity) {
         try {
-            cartItemService.updateItemQuantity(cartId, itemId, cartItemDto.getQuantity());
+            cartItemService.updateItemQuantity(cartId, itemId, quantity);
             return ResponseEntity.ok(new ApiResponse("Update Item Success", null));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));

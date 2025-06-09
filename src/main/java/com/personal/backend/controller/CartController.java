@@ -1,7 +1,5 @@
 package com.personal.backend.controller;
 
-import com.personal.backend.config.CartMapper;
-import com.personal.backend.dto.CartDto;
 import com.personal.backend.exceptions.ResourceNotFoundException;
 import com.personal.backend.model.Cart;
 import com.personal.backend.response.ApiResponse;
@@ -22,8 +20,7 @@ public class CartController {
     public ResponseEntity<ApiResponse> getCart(@PathVariable Long cartId) {
         try {
             Cart cart = cartService.getCart(cartId);
-            CartDto cartDto = CartMapper.toDto(cart);
-            return ResponseEntity.ok(new ApiResponse("Success", cartDto));
+            return ResponseEntity.ok(new ApiResponse("Success", cart));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
         }

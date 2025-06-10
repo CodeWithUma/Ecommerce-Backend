@@ -14,6 +14,7 @@ package com.personal.backend.service.product;
 
 import com.personal.backend.dto.ImageDto;
 import com.personal.backend.dto.ProductDto;
+import com.personal.backend.exceptions.AlreadyExistException;
 import com.personal.backend.exceptions.ResourceNotFoundException;
 import com.personal.backend.model.Category;
 import com.personal.backend.model.Image;
@@ -45,6 +46,10 @@ public class ProductService implements IProductService {
         // If No, the save it as a new category
         // The set as the new product category.
 
+        if (productExists(request.getName(), request.getBrand())) {
+            throw new AlreadyExistException(request.getBrand() + " " + request.getName() + " already exists, you may update this product instead!.");
+        }
+
         Category category = Optional.ofNullable(categoryRepository.findByName(request.getCategory().getName()))
                 .orElseGet(() -> {
                     Category newCategory = new Category(request.getCategory().getName());
@@ -52,6 +57,10 @@ public class ProductService implements IProductService {
                 });
         request.setCategory(category);
         return productRepository.save(createProduct(request, category));
+    }
+
+    private boolean productExists(String name, String brand) {
+        return productRepository.existsByNameAndBrand(name, brand);
     }
 
     private Product createProduct(AddProductRequest request, Category category) {
@@ -64,7 +73,6 @@ public class ProductService implements IProductService {
                 category
         );
     }
-
 
     @Override
     public Product getProductById(Long id) {

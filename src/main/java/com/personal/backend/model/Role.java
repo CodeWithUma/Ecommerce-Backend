@@ -16,10 +16,10 @@ public class Role {
     private Long id;
     private String name;
 
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
+    private Collection<User> users = new HashSet<>();
+
     public Role(String name) {
         this.name = name;
     }
-
-    @ManyToMany(mappedBy = "roles")
-    private Collection<User> users = new HashSet<>();
 }

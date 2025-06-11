@@ -3,14 +3,12 @@ package com.personal.backend.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.HashSet;
 
 @Entity
 @Getter
-@Service
 @NoArgsConstructor
 public class Role {
     @Id

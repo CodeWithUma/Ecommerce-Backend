@@ -1,4 +1,4 @@
-package com.personal.backend.config;
+package com.personal.backend.security.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

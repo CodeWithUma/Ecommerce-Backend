@@ -71,7 +71,11 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     private void createDefaultRoleIfNotExists(Set<String> roles) {
         roles.stream()
                 .filter(role -> roleRepository.findByName(role).isEmpty())
-                .map(Role::new)
+                .map(roleName -> {
+                    Role role = new Role();
+                    role.setName(roleName);
+                    return role;
+                })
                 .forEach(roleRepository::save);
     }
 }

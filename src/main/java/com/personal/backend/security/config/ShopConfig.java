@@ -70,10 +70,14 @@ public class ShopConfig {
                 .sessionManagement
                         (session -> session
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests
-                        (auth -> auth
-                                .requestMatchers(SECURED_URLS.toArray(new String[0])).authenticated()
-                                .anyRequest().permitAll()
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html"
+                        ).permitAll()
+                        .requestMatchers(SECURED_URLS.toArray(new String[0])).authenticated()
+                        .anyRequest().permitAll()
                 );
 
         http.authenticationProvider(daoAuthenticationProvider());

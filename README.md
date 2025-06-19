@@ -18,9 +18,6 @@ A Spring Boot-based backend API for an e-commerce application, supporting user a
 - ☁️ **CORS Configuration & Global Exception Handling**
 
 ---
-
-````
-
 ---
 
 ## ⚙️ Technologies Used

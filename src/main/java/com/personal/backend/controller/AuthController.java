@@ -39,7 +39,7 @@ public class AuthController {
             return ResponseEntity.ok(new ApiResponse("Login Successful", jwtResponse));
         } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new ApiResponse(e.getMessage(), null));
+                    .body(new ApiResponse("Invalid login credentials", null));
         }
     }
 }

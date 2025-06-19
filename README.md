@@ -1,6 +1,5 @@
 ### 📘 `README.md`
 
-```markdown
 # 🛒 Ecommerce-Backend
 
 A Spring Boot-based backend API for an e-commerce application, supporting user authentication, product and order management, cart functionality, image handling, and more.
@@ -24,17 +23,6 @@ A Spring Boot-based backend API for an e-commerce application, supporting user a
 
 ```
 
-com.personal.backend
-├── controller       # REST API endpoints
-├── dto              # Data Transfer Objects
-├── model            # Entity classes (JPA)
-├── repository       # Spring Data JPA Repositories
-├── service          # Business logic layer
-├── security         # JWT and user authentication logic
-├── exceptions       # Custom exceptions and global handler
-├── request/response # Request and response models
-├── config           # App-wide configurations
-└── BackendApplication.java # Main class
 
 ````
 
@@ -111,12 +99,6 @@ Or run via your IDE (IntelliJ, Eclipse, VS Code).
 * 🔄 Order tracking system
 * 🔒 Refresh token mechanism
 * 📦 Docker containerization
-
----
-
-## 🤝 Contributing
-
-Pull requests are welcome. For major changes, please open an issue first to discuss.
 
 ---
 

@@ -19,11 +19,6 @@ A Spring Boot-based backend API for an e-commerce application, supporting user a
 
 ---
 
-## 🧱 Project Structure
-
-```
-
-
 ````
 
 ---

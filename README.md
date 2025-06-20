@@ -42,7 +42,7 @@ A Spring Boot-based backend API for an e-commerce application, supporting user a
 | POST   | `/cart/add`          | Add item to cart         |
 | POST   | `/order/place`       | Place an order           |
 
-> Full API documentation available via **Swagger UI** (e.g. `/swagger-ui.html`).
+> Full API documentation available via **Swagger UI** (http://localhost:8081/swagger-ui.html).
 
 ---
 
